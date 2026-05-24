@@ -11,21 +11,22 @@ The features of this `Nodejs` `Express` backend application are listed below:-
 - Using `Cloudinary` for handling images. Usage of UploadCloudinary and DeleteCloudinary helper functions.
 - Using `Razorpay` for handling the payment system with it user can pay through Net Banking, Credit/Debit card, UPI, EMI, Pay later etc. Usage of webhooks in razorpay.
 
-## Admin Panel
-To start run the following commands:
+## Running the Project
+Make sure docker is installed and run these commands:
 ```bash
-git clone https://github.com/Harshroxnox/E-Commerce.git
+git clone https://github.com/Harshroxnox/Fabrinex.git
 ```
 ```bash
-cd E-Commerce/vite-react-app
+cd Fabrinex
 ```
 ```bash
-npm install
+docker compose up
 ```
+The project should be running on http://localhost:5173. Create the first AdminUser using the register route and then using its credentials log into the portal.
+# Deleting Docker Volumes
 ```bash
-npm run dev
+docker compose down -v
 ```
-
 
 ## Built using: 
 - `Nodejs v20.15.1`
