@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build: ./Backend
+    container_name: ecommerce_backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./Backend/.env
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    container_name: ecommerce_frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  mysql:
+    image: mysql:8
+    container_name: ecommerce_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: ecommerce
+      MYSQL_USER: fabrinex
+      MYSQL_PASSWORD: mysql123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Backend/commands.sql:/docker-entrypoint-initdb.d/commands.sql
+
+  redis:
+    image: redis:latest
+    container_name: ecommerce_redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql_data:

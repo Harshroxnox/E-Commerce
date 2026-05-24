@@ -7,7 +7,7 @@ import logger from '../utils/logger.js';
 export const connectDB = async () => {
   try {
     const db = mysql.createPool({
-      host: "localhost",
+      host: process.env.MYSQL_HOST,
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: "ecommerce",
