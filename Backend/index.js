@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { connectDB, connectRedis } from "./DB/connection.js";
+import { seedAdmin } from './DB/seedDefault.js';
 import { app } from './app.js';
 import logger from './utils/logger.js';
 
@@ -11,7 +12,8 @@ const startServer = async () => {
     db = await connectDB(); 
     redis = await connectRedis();
 
-
+    // Seed Database
+    await seedAdmin(db);
 
     app.listen(process.env.PORT || 8000, () => {
       logger.info(`⚙️ Server is running at port: ${process.env.PORT || 8000}`);

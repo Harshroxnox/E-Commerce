@@ -22,7 +22,11 @@ cd Fabrinex
 ```bash
 docker compose up
 ```
-The project should be running on http://localhost:5173. Create the first AdminUser using the register route and then using its credentials log into the portal.
+The project should be running on http://localhost:5173. Default AdminUser credentials to login are:-
+- Email: `admin@gmail.com`
+- Password: `Admin@16`
+<p>These can be changed by setting appropriate env variables.
+
 # Deleting Docker Volumes
 ```bash
 docker compose down -v

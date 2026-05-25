@@ -60,16 +60,15 @@ const logger = createLogger({
   ]
 });
 
-// While in development also log to console
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(), 
-      format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-      format.errors({ stack: true }),
-      myFormat,
-    )
-  }));
-}
+// Also log to console can disable by commenting this
+logger.add(new transports.Console({
+  format: format.combine(
+    format.colorize(), 
+    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    format.errors({ stack: true }),
+    myFormat,
+  )
+}));
+
 
 export default logger;

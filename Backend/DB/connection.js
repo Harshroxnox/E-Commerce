@@ -5,22 +5,34 @@ import logger from '../utils/logger.js';
 
 // Connect to MySQL
 export const connectDB = async () => {
-  try {
-    const db = mysql.createPool({
-      host: process.env.MYSQL_HOST,
-      user: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD,
-      database: "ecommerce",
-      waitForConnections: true,
-      connectionLimit: process.env.MYSQL_CONNECTION_LIMIT, // or more depending on expected load
-      dateStrings: true
-    });
 
-    logger.info(`MySQL connected successfully!`);
-    return db; // Return the connection object
-  } catch (error) {
-    logger.error("MySQL connection FAILED:", error);
-    process.exit(1);
+  while (true) {
+    try {
+      const db = mysql.createPool({
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: "ecommerce",
+        waitForConnections: true,
+        connectionLimit: process.env.MYSQL_CONNECTION_LIMIT, // or more depending on expected load
+        dateStrings: true
+      });
+
+      // Force connection test
+      const connection = await db.getConnection();
+      connection.release();
+
+      logger.info(`MySQL connected successfully!`);
+      return db; // Return the connection object
+
+    } catch (error) {
+      
+      logger.error("MySQL connection Failed. Retrying in 5 seconds...");
+      logger.error(error?.message || error);
+      
+      // Wait 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
   }
 };
 
